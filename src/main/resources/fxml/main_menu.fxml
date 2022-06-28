@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxControllers.RootSceneController">
+   <children>
+      <TextField layoutX="424.0" layoutY="17.0" prefHeight="25.0" prefWidth="53.0" text="s26455" />
+      <TextField layoutX="388.0" layoutY="42.0" prefHeight="25.0" prefWidth="124.0" text="MEMORY THE GAME" />
+      <VBox layoutX="370.0" layoutY="155.0" prefHeight="291.0" prefWidth="162.0" spacing="50.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#startGame" prefHeight="56.0" prefWidth="172.0" text="NEW GAME" />
+            <Button mnemonicParsing="false" onAction="#goScore" prefHeight="54.0" prefWidth="171.0" text="SCORES" />
+            <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="174.0" text="EXIT" />
+         </children>
+      </VBox>
+   </children>
+</Pane>
