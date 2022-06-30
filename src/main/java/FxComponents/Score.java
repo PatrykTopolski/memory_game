@@ -9,4 +9,8 @@ public class Score {
 
     String name;
     double TimeInMilis;
+    int cardsDiscoveredFirstTime;
+    int numberOfCards;
+
+
 }

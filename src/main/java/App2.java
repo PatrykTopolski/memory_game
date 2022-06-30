@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+import static FxControllers.RootSceneController.WINDOW_HEIGHT;
+import static FxControllers.RootSceneController.WINDOW_WIDTH;
+
 public class App2 extends Application {
 
 
@@ -21,7 +24,7 @@ public class App2 extends Application {
         controller.setRoot(root);
         controller.setScores(new ArrayList<>());
         primaryStage.setTitle("Memory");
-        Scene menu = new Scene(root, 960, 500);
+        Scene menu = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         controller.setMainMenu(menu);
         primaryStage.setScene(menu);
         primaryStage.show();

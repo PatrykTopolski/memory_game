@@ -35,8 +35,10 @@ public class GameTimer implements Runnable{
 
     }
 
-    public void stopGameTimer(){
-        gameIsWorking = false;
-        stopGame = Instant.now();
+    public double stopGameTimer(){
+
+        return Instant.ofEpochMilli(
+                Duration.between(startGame, Instant.now()).toMillis()
+        ).toEpochMilli();
     }
 }

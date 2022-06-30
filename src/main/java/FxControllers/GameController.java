@@ -74,7 +74,6 @@ public class GameController extends Pane {
             if (isGameWon()){
                 System.out.println("game is won");
                 askForName();
-//                rootSceneController.setMainMenuScene();
             }
         }else{
             System.out.println("its not the same.. kurwa student debil");
@@ -99,12 +98,19 @@ public class GameController extends Pane {
         }
         NameController controller = loader.getController();
         controller.setLoader(loader);
+        controller.setTime(timerThread.stopGameTimer());
+        controller.setNumberDiscovered(calculateCardsDiscoveredBlind());
         controller.setRootController(rootSceneController);
+        controller.setCardsNumber(cards.size());
         Stage nameStage = new Stage();
         controller.setThisStage(nameStage);
         nameStage.setTitle("set name");
         nameStage.setScene(new Scene(rootName, 600, 400));
         nameStage.show();
+    }
+
+    private int calculateCardsDiscoveredBlind() {
+        return (int) cards.stream().filter(Card::isNotRevealed).count() / 2;
     }
 
     public boolean isGameWon(){

@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import lombok.*;
 
+import java.util.Comparator;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,7 +15,7 @@ import lombok.*;
 @ToString
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Card  extends ImageView {
+public class Card  extends ImageView   {
 
     private int carTypeId;
     public boolean faceDown;
@@ -25,10 +27,12 @@ public class Card  extends ImageView {
     private boolean done;
 
 
+
     public void setUp(){
         this.dropShadow = new DropShadow(2, Color.gray(0, 0.75));
         faceDown = true;
         done = false;
+        notRevealed = true;
         setImage(backFace);
         setEffect(dropShadow);
         setId("anything");
@@ -38,5 +42,7 @@ public class Card  extends ImageView {
         faceDown = !faceDown;
         setImage(faceDown ? backFace : frontFace);
     }
+
+
 
 }

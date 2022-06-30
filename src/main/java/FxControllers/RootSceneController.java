@@ -10,16 +10,21 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import utils.ScoreComparator;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
 public class RootSceneController {
     List<Score> scores;
-    private  static double WINDOW_WIDTH = 1400;
-    private  static double WINDOW_HEIGHT = 500;
+    public final static double WINDOW_WIDTH = 800;
+    public final static double WINDOW_HEIGHT = 600;
     private Parent root;
     private Stage primaryStage;
     private volatile Scene mainMenu;
@@ -50,16 +55,30 @@ public class RootSceneController {
         scoreController.setSceneController(this);
         scoreController.setScores(scores);
         setScore(loader);
-        primaryStage.setScene(new Scene(score, 600, 400));
+        primaryStage.setScene(new Scene(score, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.show();
+
     }
 
     private void setScore(FXMLLoader loader){
         VBox scrollPane = (VBox) loader.getNamespace().get("scrollScores");
-        scores.forEach(score ->{
-            scrollPane.getChildren().add(new Text(score.getName()));
+        scores.stream().sorted(
+                Comparator
+                        .comparing(Score::getNumberOfCards)
+                        .thenComparing(ScoreComparator::compareTime)
+                        .thenComparing(ScoreComparator::compareCardsNumberBlind))
+                .collect(Collectors.toCollection(ArrayDeque::new))
+                .descendingIterator()
+                .forEachRemaining(score ->{
+            scrollPane.getChildren().add(new Text(buildScioreEntry(score))); // elegancko
         });
 
+
+    }
+
+
+    private String buildScioreEntry(Score score) {
+        return "NAME: " + score.getName() + " NUMBER OF CARDS" + score.getNumberOfCards() + " TIME (milliseconds): " + score.getTimeInMilis() + " CARDS DISCOVERED BLIND: " + score.getCardsDiscoveredFirstTime();
     }
 
     public void setMainMenuScene(){

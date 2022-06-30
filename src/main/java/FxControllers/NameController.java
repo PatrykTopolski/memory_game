@@ -15,14 +15,20 @@ public class NameController {
     private  static double WINDOW_HEIGHT = 500;
     private Stage thisStage;
     private FXMLLoader loader;
-
     private RootSceneController rootController;
+    private double time;
+    private int numberDiscovered;
+    private int cardsNumber;
+
 
     public void confirmName(){
         TextField textNumber = (TextField) loader.getNamespace().get("confirmName");
         String name = textNumber.getText();
         rootController.getScores().add(Score.builder()
                         .name(name)
+                        .cardsDiscoveredFirstTime(numberDiscovered)
+                        .TimeInMilis(time)
+                        .numberOfCards(cardsNumber)
                 .build());
         thisStage.close();
         rootController.setMainMenuScene();
