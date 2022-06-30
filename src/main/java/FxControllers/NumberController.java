@@ -41,6 +41,7 @@ public class NumberController {
         primaryStage.show();
         game.setCards(cards);
         game.dealCards();
+        game.initTimer();
     }
 
     private java.util.List<Card> generateCards(int cardsNumber){

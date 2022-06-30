@@ -62,5 +62,6 @@ public class App  extends Application {
         primaryStage.show();
         game.setCards(cards);
         game.dealCards();
+        game.initTimer();
     }
 }

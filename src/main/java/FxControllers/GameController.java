@@ -2,26 +2,40 @@ package FxControllers;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import FxComponents.Card;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import utils.CardsAfterLife;
+import utils.GameTimer;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GameController extends Pane {
     private List<Card> cards;
-
     private volatile Card lastDraggedCard;
     private volatile Card draggedCard;
-
     private volatile RootSceneController rootSceneController;
+    private volatile String currentTime;
+    GameTimer timerThread;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter
+            .ofPattern("mm:ss").withZone(ZoneId.systemDefault());
 
 
     private final EventHandler<MouseEvent> onMousePressedHandler =  e -> {
@@ -140,5 +154,34 @@ public class GameController extends Pane {
 
     public void setRootSceneController(RootSceneController rootSceneController) {
         this.rootSceneController = rootSceneController;
+    }
+
+    public void displayTime(Duration between) {
+        Instant durationNow = Instant.ofEpochMilli(between.toMillis());
+        if (getChildren().isEmpty()){
+            return;
+        }
+        Optional<Node> textNode =  getChildren().stream()
+                .filter( element -> element.getId().equals("time"))
+                .findFirst();
+        if (!textNode.isPresent()){
+            return;
+        }
+        Text textArea = (Text) textNode.get();
+        String formatted = formatter.format(durationNow);
+        textArea.setText(formatted);
+        System.out.println(textArea.getText());
+    }
+
+    public void initTimer() {
+        Text timer = new Text();
+        timer.setFont(Font.font("Arial"));
+        timer.setText("Lorem Ipsum");
+        timer.setLayoutX(470);
+        timer.setLayoutY(100);
+        timer.setId("time");
+        getChildren().add(timer);
+        timerThread = new GameTimer(this);
+        timerThread.run();
     }
 }

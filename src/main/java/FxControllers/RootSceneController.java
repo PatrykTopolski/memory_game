@@ -25,7 +25,6 @@ public class RootSceneController {
     private volatile Scene mainMenu;
 
 
-
     public void startGame() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/fxml/chose_cards.fxml"));

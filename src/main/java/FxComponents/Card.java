@@ -31,6 +31,7 @@ public class Card  extends ImageView {
         done = false;
         setImage(backFace);
         setEffect(dropShadow);
+        setId("anything");
     }
 
     public void flip() {
