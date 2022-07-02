@@ -8,11 +8,12 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FxControllers.ScoreController">
    <children>
-         <ScrollPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="100.0">
+         <ScrollPane layoutX="-1.0" prefHeight="315.0" prefWidth="600.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
             <content>
                <VBox id="scrollScores" fx:id="scrollScores" prefHeight="200.0" prefWidth="100.0" />
             </content>
          </ScrollPane>
       <Button fx:id="goBack" layoutX="274.0" layoutY="328.0" mnemonicParsing="false" onAction="#goBack" text="go back" />
    </children>
+
 </AnchorPane>
