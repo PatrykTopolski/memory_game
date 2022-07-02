@@ -1,20 +1,20 @@
 package FxControllers;
 
 import FxComponents.Score;
+import dao.ScoreRepository;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
-import utils.ScoreComparator;
+import service.ScoreComparator;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,11 +29,13 @@ public class RootSceneController {
     private Stage primaryStage;
     private volatile Scene mainMenu;
 
+    private ScoreRepository repository;
+
 
     public void startGame() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/fxml/chose_cards.fxml"));
-        Parent rootNumbers = (Parent) loader.load();
+        Parent rootNumbers = loader.load();
         NumberController controller = loader.getController();
         controller.setPrimaryStage(primaryStage);
         controller.setLoader(loader);
@@ -46,11 +48,10 @@ public class RootSceneController {
     }
 
 
-
     public void goScore() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/fxml/score.fxml"));
-        Parent score = (Parent) loader.load();
+        Parent score = loader.load();
         ScoreController scoreController = loader.getController();
         scoreController.setSceneController(this);
         scoreController.setScores(scores);
@@ -60,18 +61,23 @@ public class RootSceneController {
 
     }
 
-    private void setScore(FXMLLoader loader){
+    public void exit() throws IOException {
+        repository.saveAll(scores);
+        Platform.exit();
+    }
+
+    private void setScore(FXMLLoader loader) {
         VBox scrollPane = (VBox) loader.getNamespace().get("scrollScores");
         scores.stream().sorted(
-                Comparator
-                        .comparing(Score::getNumberOfCards)
-                        .thenComparing(ScoreComparator::compareTime)
-                        .thenComparing(ScoreComparator::compareCardsNumberBlind))
+                        Comparator
+                                .comparing(Score::getNumberOfCards)
+                                .thenComparing(ScoreComparator::compareTime)
+                                .thenComparing(ScoreComparator::compareCardsNumberBlind))
                 .collect(Collectors.toCollection(ArrayDeque::new))
                 .descendingIterator()
-                .forEachRemaining(score ->{
-            scrollPane.getChildren().add(new Text(buildScioreEntry(score))); // elegancko
-        });
+                .forEachRemaining(score -> {
+                    scrollPane.getChildren().add(new Text(buildScioreEntry(score))); // elegancko
+                });
 
 
     }
@@ -81,7 +87,7 @@ public class RootSceneController {
         return "NAME: " + score.getName() + " NUMBER OF CARDS" + score.getNumberOfCards() + " TIME (milliseconds): " + score.getTimeInMilis() + " CARDS DISCOVERED BLIND: " + score.getCardsDiscoveredFirstTime();
     }
 
-    public void setMainMenuScene(){
+    public void setMainMenuScene() {
         primaryStage.setScene(mainMenu);
         primaryStage.show();
     }
