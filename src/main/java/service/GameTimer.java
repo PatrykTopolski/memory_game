@@ -1,4 +1,4 @@
-package utils;
+package service;
 
 import FxControllers.GameController;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 public class GameTimer implements Runnable{
