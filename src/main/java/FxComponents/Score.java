@@ -1,16 +1,26 @@
 package FxComponents;
 
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.*;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Builder
+@ToString
+@JsonPropertyOrder({"id", "name","description","price", "available"})
 public class Score {
 
-    String name;
-    double TimeInMilis;
-    int cardsDiscoveredFirstTime;
-    int numberOfCards;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("TimeInMilis")
+    private double TimeInMilis;
+    @JsonProperty("cardsDiscoveredFirstTime")
+    private int cardsDiscoveredFirstTime;
+    @JsonProperty("numberOfCards")
+    private int numberOfCards;
 
 
 }
